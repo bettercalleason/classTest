@@ -197,7 +197,6 @@
 
         document.addEventListener('dragstart', (e) => {
             console.log(e.target);
-            // Drag(e);
         })
 
         document.addEventListener('drop', (e) => {
@@ -211,17 +210,16 @@
         function AllowDrop(event) {
             event.preventDefault();
         }
+
         function Drag(event) {
-            console.log('Drag evet', event);
             event.dataTransfer.setData("text", event.currentTarget.id);
+            event.currentTarget.style.color = 'red';
         }
         function Drop(event) {
-            console.log('drop event', event.currentTarget)
             event.preventDefault();
             var data = event.dataTransfer.getData("text");
-            console.log('drop data', data)
             insertAfter(document.getElementById(data), event.currentTarget);
-            // .appendChild();
+            document.getElementById(data).style.color = 'black';
         }
 
 
