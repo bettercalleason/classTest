@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課表試排</title>
+    <style>
+        .months {
+            margin-bottom: 50px;
+        }
+
+        .weeks {
+            width: 1232px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .days,
+        .week-titles {
+            min-width: 126px;
+            min-height: 0px;
+            padding: 15px;
+            text-align: center;
+            margin: 10px;
+            background-color: #ccc;
+        }
+
+        .week-titles {
+            background-color: #afa;
+        }
+
+        .holiday {
+            background-color: #faf;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="">前端班開課日期：</label>
+    <input type="date" id="getMFEEDay">
+    <div id="root"></div>
+    <!-- <div class="month">
+        <div class="month-title">11月</div>
+        <div class="weeks">
+            <div class="days">1</div>
+            <div class="days">2</div>
+        </div>
+
+    </div> -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/dayjs"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/isSameOrAfter"></script>
+    <script>dayjs.extend(window.dayjs_plugin_isSameOrAfter)</script>
+    <script>
+
+        let getDay = document.querySelector("#getMFEEDay")
+        getDay.value = '2021-02-24';
+
+        getDay.addEventListener('change', () => {
+            render();
+            console.log('getDay.value', getDay.value);
+        })
+
+        // dayjs('2019-01-25').daysInMonth() 月份天數
+        // dayjs(`2019-12-${i}`).day() 星期幾
+        let root = document.querySelector('#root');
+        let year = 2021;
+        let month = 1;
+        let weekIndex = 0;
+        let dayIndex = 0;
+        let newMonthDiv = null;
+        let newWeekDiv = null;
+
+        const holidays2021 = ['2021-1-1', '2021-1-2', '2021-1-3', '2021-2-10', '2021-2-11', '2021-2-12', '2021-2-13', '2021-2-14', '2021-2-15', '2021-2-16', '2021-2-27', '2021-2-28', , '2021-3-01', '2021-4-2', '2021-4-3', '2021-4-4', '2021-4-5', '2021-6-12', '2021-6-13', '2021-6-14', '2021-9-19', '2021-9-20', '2021-9-21', '2021-10-9', '2021-10-10', '2021-10-11'];
+
+        const checkIfHoliday = (date) => {
+            let isHoliday = false;
+            holidays2021.forEach((holiday) => {
+                if (dayjs(date).isSame(holiday) || dayjs(date).day() === 0 || dayjs(date).day() === 6) isHoliday = true;
+            })
+
+            return isHoliday;
+        }
+
+        const week1 = [['<div class="class-title">導師時間</div>', '<div class="class-title">開訓典禮</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門</div>', '<div class="class-title">網頁設計入門</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門</div>', '<div class="class-title">網頁設計入門</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網站視覺設計</div>', '<div class="class-title">網站視覺設計</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門</div>', '<div class="class-title">網頁設計入門</div>', '<div class="class-title">N/A</div>']];
+
+        const week2 = [['<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">網站規劃</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">N/A</div>']];
+        const week3 = [['<div class=""class-title"">網站視覺設計</div>', '<div class=""class-title"">LAB1</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">CSS</div>', '<div class=""class-title"">CSS</div>', '<div class=""class-title"">LAB2</div>'], ['<div class=""class-title"">CSS</div>', '<div class=""class-title"">CSS</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">CSS</div>', '<div class=""class-title"">CSS</div>', '<div class=""class-title"">LAB3</div>'], ['<div class=""class-title"">Bootstrap</div>', '<div class=""class-title"">Bootstrap</div>', '<div class=""class-title"">N/A</div>']];
+        const week4 = [['<div class=""class-title"">Bootstrap</div>', '<div class=""class-title"">Bootstrap</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Bootstrap</div>', '<div class=""class-title"">Bootstrap</div>', '<div class=""class-title"">LAB4</div>'], ['<div class=""class-title"">UI設計實作</div>', '<div class=""class-title"">UI設計實作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">UI設計實作</div>', '<div class=""class-title"">UI設計實作</div>', '<div class=""class-title"">LAB5</div>'], ['<div class=""class-title"">專題觀摩</div>', '<div class=""class-title"">網站規劃</div>', '<div class=""class-title"">N/A</div>']];
+        const week5 = [['<div class=""class-title"">UI設計實作</div>', '<div class=""class-title"">UI設計實作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">JS</div>', '<div class=""class-title"">JS</div>', '<div class=""class-title"">LAB6</div>'], ['<div class=""class-title"">JS</div>', '<div class=""class-title"">JS</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">JS</div>', '<div class=""class-title"">網站規劃</div>', '<div class=""class-title"">LAB7</div>'], ['<div class=""class-title"">JS</div>', '<div class=""class-title"">JS Advanced</div>', '<div class=""class-title"">N/A</div>']];
+        const week6 = [['<div class=""class-title"">JS Advanced</div>', '<div class=""class-title"">JS Advanced</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>']];
+
+        const week7 = [['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">JS Advanced</div>', '<div class=""class-title"">JS Advanced</div>', '<div class=""class-title"">LAB8</div>'], ['<div class=""class-title"">JS Advanced</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">MySQL</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">MySQL</div>', '<div class=""class-title"">MySQL</div>', '<div class=""class-title"">N/A</div>']];
+        const week8 = [['<div class=""class-title"">MySQL</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">MySQL</div>', '<div class=""class-title"">MySQL</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">PHP</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">PHP</div>', '<div class=""class-title"">PHP</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">PHP</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">N/A</div>']];
+        const week9 = [['<div class=""class-title"">PHP</div>', '<div class=""class-title"">PHP</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">PHP</div>', '<div class=""class-title"">PHP</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">PHP</div>', '<div class=""class-title"">LAB9</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">PHP</div>', '<div class=""class-title"">PHP</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">LAB10</div>', '<div class=""class-title"">PHP</div>', '<div class=""class-title"">N/A</div>']];
+        const week10 = [['<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">LAB11</div>'], ['<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">LAB12</div>'], ['<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">期中專題製作</div>', '<div class=""class-title"">N/A</div>']];
+        const week11 = [['<div class=""class-title"">jQuery</div>', '<div class=""class-title"">jQuery</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">jQuery</div>', '<div class=""class-title"">jQuery</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">jQuery</div>', '<div class=""class-title"">jQuery</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Plugin</div>', '<div class=""class-title"">Plugin</div>', '<div class=""class-title"">LAB13</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>']];
+
+        const week12 = [['<div class=""class-title"">Plugin</div>', '<div class=""class-title"">Plugin</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Plugin</div>', '<div class=""class-title"">Plugin</div>', '<div class=""class-title"">LAB14</div>'], ['<div class=""class-title"">Node.js</div>', '<div class=""class-title"">網站規劃</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Node.js</div>', '<div class=""class-title"">Node.js</div>', '<div class=""class-title"">LAB15</div>'], ['<div class=""class-title"">Node.js</div>', '<div class=""class-title"">Node.js</div>', '<div class=""class-title"">N/A</div>']];
+        const week13 = [['<div class=""class-title"">Node.js</div>', '<div class=""class-title"">職場講座</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Node.js前後端</div>', '<div class=""class-title"">Node.js前後端</div>', '<div class=""class-title"">LAB16</div>'], ['<div class=""class-title"">Node.js前後端</div>', '<div class=""class-title"">Node.js前後端</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Node.js前後端</div>', '<div class=""class-title"">Node.js前後端</div>', '<div class=""class-title"">LAB17</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">網站規劃</div>', '<div class=""class-title"">N/A</div>']];
+        const week14 = [['<div class=""class-title"">HTML5 API</div>', '<div class=""class-title"">HTML5 API</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">HTML5 API</div>', '<div class=""class-title"">HTML5 API</div>', '<div class=""class-title"">LAB18</div>'], ['<div class=""class-title"">HTML5 API</div>', '<div class=""class-title"">HTML5 API</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">React.js</div>', '<div class=""class-title"">React.js</div>', '<div class=""class-title"">LAB19</div>'], ['<div class=""class-title"">React.js</div>', '<div class=""class-title"">網站規劃</div>', '<div class=""class-title"">N/A</div>']];
+        const week15 = [['<div class=""class-title"">React.js</div>', '<div class=""class-title"">React.js</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">React.js</div>', '<div class=""class-title"">React.js</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">React.js</div>', '<div class=""class-title"">模擬面試</div>', '<div class=""class-title"">LAB20</div>'], ['<div class=""class-title"">React.js</div>', '<div class=""class-title"">React.js</div>', '<div class=""class-title"">N/A</div>']];
+
+        const week16 = [['<div class=""class-title"">React.js</div>', '<div class=""class-title"">React.js</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">專題指導</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">LAB21</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">LAB22</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>']];
+        const week17 = [['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">LAB23</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>']];
+        const week18 = [['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">LAB24</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>']];
+        const week19 = [['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題製作</div>', '<div class=""class-title"">專題指導</div>', '<div class=""class-title"">N/A</div>']];
+
+        const week20 = [['<div class="class-title">補休假</div>', '<div class="class-title">補休假</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題製作</div>', '<div class="class-title">專題指導</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題製作</div>', '<div class="class-title">專題指導</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">專題預演</div>', '<div class="class-title">期末專題製作</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">專題發表</div>', '<div class="class-title">就業媒合活動</div>', '<div class="class-title">N/A</div>']];
+
+
+        const allWeeks = [...week1, ...week2, ...week3, ...week4, ...week5, ...week6, ...week7, ...week8, ...week9, ...week10, ...week11, ...week12, ...week13, ...week14, ...week15, ...week16, ...week17, ...week18, ...week19, ...week20];
+
+
+        const render = () => {
+            root.innerHTML = '';
+            dayIndex = 0;
+            for (i = 1; i <= 12; i++) {
+                month = i;
+                weekIndex = 0;
+                newMonthDiv = document.createElement('div');
+                newMonthDiv.classList.add(`months`, `month-${month}`);
+
+                let newMonthTitleArea = document.createElement('div');
+                newMonthTitleArea.innerHTML = `${year}年 ${month}月`;
+                newMonthDiv.append(newMonthTitleArea);
+
+                let newWeekTitleArea = document.createElement('div');
+                newWeekTitleArea.classList.add('weeks');
+                for (let i = 0; i < 7; i++) {
+                    let translateTitle = ['一', '二', '三', '四', '五', '六', '日']
+                    let newWeekTitles = document.createElement('div');
+                    newWeekTitles.classList.add('week-titles')
+                    newWeekTitles.innerHTML = translateTitle[i];
+                    newWeekTitleArea.append(newWeekTitles);
+                }
+
+                newMonthDiv.append(newWeekTitleArea);
+                root.append(newMonthDiv);
+
+                for (let i = 1; i <= dayjs(`${year}-${month}`).daysInMonth(); i++) {
+
+                    if (i === 1 || dayjs(`${year}-${month}-${i}`).day() === 1) {
+                        newWeekDiv = document.createElement('div');
+                        newWeekDiv.classList.add(`weeks`, `week-${weekIndex}`);
+                        if (i === 1) newWeekDiv.style.justifyContent = 'flex-end';
+                        newMonthDiv.append(newWeekDiv);
+                    }
+
+                    let newDayDiv = document.createElement('div')
+                    newDayDiv.innerHTML = i;
+                    newDayDiv.className = 'days';
+
+                    if (checkIfHoliday(`${year}-${month}-${i}`)) {
+                        newDayDiv.classList.add('holiday');
+                    }
+
+                    if (dayjs(`${year}-${month}-${i}`).isSameOrAfter(dayjs(getDay.value)) && allWeeks[dayIndex] && dayjs(`${year}-${month}-${i}`).day() !== 6 && dayjs(`${year}-${month}-${i}`).day() !== 0 && !checkIfHoliday(`${year}-${month}-${i}`)) {
+                        for (let k = 0; k < 3; k++) {
+                            // console.log('hi', k, ',', week1[i - 1][k]);
+                            newDayDiv.innerHTML += allWeeks[dayIndex][k];
+                        }
+                        dayIndex++;
+                    }
+
+                    newWeekDiv.append(newDayDiv);
+
+                    if (dayjs(`${year}-${month}-${i}`).day() === 1) {
+                        weekIndex += 1;
+                    }
+                }
+            }
+        }
+
+        render();
+
+    </script>
+</body>
+
+</html>
