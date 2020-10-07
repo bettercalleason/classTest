@@ -161,9 +161,12 @@
                     }
 
                     let newDayDiv = document.createElement('div')
-                    newDayDiv.innerHTML = i;
-                    // newDayDiv.setAttribute("ondrop", "Drop(event)");
+
+                    let newDayTitle = document.createElement('div')
+                    newDayTitle.innerHTML = i;
+                    newDayTitle.setAttribute("ondrop", "Drop(event)");
                     newDayDiv.setAttribute("ondragover", "AllowDrop(event)");
+                    newDayDiv.append(newDayTitle);
                     newDayDiv.className = 'days';
 
                     if (checkIfHoliday(`${year}-${month}-${i}`)) {
