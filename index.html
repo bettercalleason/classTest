@@ -7,17 +7,31 @@
     <title>課表試排</title>
     <style>
         .class-info {
-            width: 90%;
+            width: 100%;
             display: flex;
+            flex-wrap: wrap;
             margin-bottom: 30px;
         }
 
         .class-info div {
-            margin-right: 10px;
+            margin-bottom: 30px;
         }
 
         .months {
             margin-bottom: 50px;
+        }
+
+        .classname-title-area {
+            font-size: 0;
+        }
+
+        .class-color-example {
+            font-size: 14px;
+        }
+
+        .month-title {
+            font-size: 20px;
+            margin: 0 14px
         }
 
         .weeks {
@@ -45,7 +59,7 @@
         }
 
         .holiday {
-            background-color: rgb(235, 171, 235);
+            background-color: rgba(255, 0, 0, 0.151);
         }
 
         div[draggable="true"] {
@@ -58,26 +72,81 @@
             -ms-user-select: none;
         }
 
-        .MFEE11 {
-            background-color: rgb(247, 249, 153);
+        .MFEE13 {
+            background-color: rgba(247, 249, 153, 0.851);
+        }
+
+        .MFEE15 {
+            background-color: rgba(175, 252, 137, 0.584);
+        }
+
+        .MFEE17 {
+            background-color: rgba(247, 206, 134, 0.803);
         }
 
         .MMMH60 {
-            background-color: rgb(165, 231, 237);
+            background-color: rgba(165, 231, 237, 0.728);
+        }
+
+        .MMMH61 {
+            background-color: rgba(216, 187, 253, 0.507);
+        }
+
+        .class-color-example {
+            padding: 2px 10px;
+        }
+
+        .class-toggle-btn {
+            background-color: rgb(255, 219, 219);
+            color: rgb(58, 153, 237);
+            padding: 2px 4px;
+            border-radius: 10px;
+        }
+
+        .w-50 {
+            width: 50%;
+        }
+
+        .br-10 {
+            border-radius: 10px;
+        }
+
+
+        .mr-10 {
+            margin-right: 10px;
+        }
+
+        .display-none {
+            display: none;
         }
     </style>
 </head>
 
 <body>
     <div class="class-info">
-        <div class="mfee11">
-            <label for="">前端班開課日期：</label>
-            <input type="date" id="getMFEEDay">
+        <div class="mfee13 w-50">
+            <label for="">MFEE11 開課日期：</label>
+            <input type="date" id="getMFEE13Day">
         </div>
 
-        <div class="mmmh60">
-            <label for="">uiux班開課日期：</label>
+        <div class="mmmh60 w-50">
+            <label for="">MMMH60 班開課日期：</label>
             <input type="date" id="getMMMH60Day">
+        </div>
+
+        <div class="mfee15 w-50">
+            <label for="">MFEE15 開課日期：</label>
+            <input type="date" id="getMFEE15Day">
+        </div>
+
+        <div class="mmmh61 w-50">
+            <label for="">MMMH61 班開課日期：</label>
+            <input type="date" id="getMMMH61Day">
+        </div>
+
+        <div class="mfee17 w-50">
+            <label for="">MFEE17 開課日期：</label>
+            <input type="date" id="getMFEE17Day">
         </div>
     </div>
 
@@ -142,40 +211,54 @@
         const allWeeks = [...week1, ...week2, ...week3, ...week4, ...week5, ...week6, ...week7, ...week8, ...week9, ...week10, ...week11, ...week12, ...week13, ...week14, ...week15, ...week16, ...week17, ...week18, ...week19, ...week20];
 
 
-        const weekUIUX1 = [['<div class=""class-title"">開訓典禮</div>', '<div class=""class-title"">導師時間</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">多媒體概論</div>', '<div class=""class-title"">Illustrator(1)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Illustrator(2)</div>', '<div class=""class-title"">Illustrator(3)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Illustrator(4)</div>', '<div class=""class-title"">Illustrator(5)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Illustrator(6)</div>', '<div class=""class-title"">Illustrator(7)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX2 = [['<div class=""class-title"">Illustrator(8)</div>', '<div class=""class-title"">Illustrator(9)</div>', '<div class=""class-title"">N/A</div>']];
+        const weekUIUX1 = [['<div class="class-title">開訓典禮</div>', '<div class="class-title">導師時間</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">多媒體概論</div>', '<div class="class-title">Illustrator(1)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Illustrator(2)</div>', '<div class="class-title">Illustrator(3)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Illustrator(4)</div>', '<div class="class-title">Illustrator(5)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Illustrator(6)</div>', '<div class="class-title">Illustrator(7)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX2 = [['<div class="class-title">Illustrator(8)</div>', '<div class="class-title">Illustrator(9)</div>', '<div class="class-title">N/A</div>']];
 
-        const weekUIUX3 = [['<div class=""class-title"">Illustrator(10)</div>', '<div class=""class-title"">Illustrator(11)</div>', '<div class=""class-title"">Lab(1)</div>'], ['<div class=""class-title"">Illustrator(12)</div>', '<div class=""class-title"">Photoshop(1)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Photoshop(2)</div>', '<div class=""class-title"">網站規劃(1)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Photoshop(3)</div>', '<div class=""class-title"">Photoshop(4)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX4 = [['<div class=""class-title"">Photoshop(5)</div>', '<div class=""class-title"">Photoshop(6)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Photoshop(7)</div>', '<div class=""class-title"">Photoshop(8)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網頁設計入門(1)</div>', '<div class=""class-title"">網頁設計入門(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Photoshop(9)</div>', '<div class=""class-title"">Photoshop(10)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網頁設計入門(3)</div>', '<div class=""class-title"">UX(1)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX5 = [['<div class=""class-title"">Photoshop(11)</div>', '<div class=""class-title"">網頁設計入門(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Photoshop(12)</div>', '<div class=""class-title"">Lab(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網頁設計入門(5)</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網頁設計入門(6)</div>', '<div class=""class-title"">Lab(3)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">網站規劃(2)</div>', '<div class=""class-title"">UX(2)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX6 = [['<div class=""class-title"">CSS3(1)</div>', '<div class=""class-title"">CSS3(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">CSS3(3)</div>', '<div class=""class-title"">CSS3(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">CSS3(5)</div>', '<div class=""class-title"">UX(3)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">CSS3(6)</div>', '<div class=""class-title"">Bootstrap(1)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Bootstrap(2)</div>', '<div class=""class-title"">Bootstrap(3)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX7 = [['<div class=""class-title"">Bootstrap(4)</div>', '<div class=""class-title"">Lab(10)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Bootstrap(5)</div>', '<div class=""class-title"">Bootstrap(6)</div>', '<div class=""class-title"">Lab(4)</div>'], ['<div class=""class-title"">Adobe XD(1)</div>', '<div class=""class-title"">Adobe XD(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">中秋節</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>']];
+        const weekUIUX3 = [['<div class="class-title">Illustrator(10)</div>', '<div class="class-title">Illustrator(11)</div>', '<div class="class-title">Lab(1)</div>'], ['<div class="class-title">Illustrator(12)</div>', '<div class="class-title">Photoshop(1)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Photoshop(2)</div>', '<div class="class-title">網站規劃(1)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Photoshop(3)</div>', '<div class="class-title">Photoshop(4)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX4 = [['<div class="class-title">Photoshop(5)</div>', '<div class="class-title">Photoshop(6)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Photoshop(7)</div>', '<div class="class-title">Photoshop(8)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門(1)</div>', '<div class="class-title">網頁設計入門(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Photoshop(9)</div>', '<div class="class-title">Photoshop(10)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門(3)</div>', '<div class="class-title">UX(1)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX5 = [['<div class="class-title">Photoshop(11)</div>', '<div class="class-title">網頁設計入門(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Photoshop(12)</div>', '<div class="class-title">Lab(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門(5)</div>', '<div class="class-title">N/A</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網頁設計入門(6)</div>', '<div class="class-title">Lab(3)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">網站規劃(2)</div>', '<div class="class-title">UX(2)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX6 = [['<div class="class-title">CSS3(1)</div>', '<div class="class-title">CSS3(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">CSS3(3)</div>', '<div class="class-title">CSS3(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">CSS3(5)</div>', '<div class="class-title">UX(3)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">CSS3(6)</div>', '<div class="class-title">Bootstrap(1)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Bootstrap(2)</div>', '<div class="class-title">Bootstrap(3)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX7 = [['<div class="class-title">Bootstrap(4)</div>', '<div class="class-title">Lab(10)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Bootstrap(5)</div>', '<div class="class-title">Bootstrap(6)</div>', '<div class="class-title">Lab(4)</div>'], ['<div class="class-title">Adobe XD(1)</div>', '<div class="class-title">Adobe XD(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">中秋節</div>', '<div class="class-title">N/A</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">N/A</div>', '<div class="class-title">N/A</div>', '<div class="class-title">N/A</div>']];
 
-        const weekUIUX8 = [['<div class=""class-title"">Adobe XD(3)</div>', '<div class=""class-title"">Adobe XD(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Adobe XD(5)</div>', '<div class=""class-title"">Adobe XD(6)</div>', '<div class=""class-title"">Lab(5)</div>'], ['<div class=""class-title"">網站規劃(3)</div>', '<div class=""class-title"">UX(5)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">jQuery UI(1)</div>', '<div class=""class-title"">jQuery UI(2)</div>', '<div class=""class-title"">Lab(6)</div>']];
-        const weekUIUX9 = [['<div class=""class-title"">jQuery UI(3)</div>', '<div class=""class-title"">jQuery UI(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">jQuery UI(5)</div>', '<div class=""class-title"">jQuery UI(6)</div>', '<div class=""class-title"">Lab(7)</div>'], ['<div class=""class-title"">jQuery Plugin(1)</div>', '<div class=""class-title"">jQuery Plugin(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">jQuery Plugin(3)</div>', '<div class=""class-title"">jQuery Plugin(4)</div>', '<div class=""class-title"">期中專題(1)</div>'], ['<div class=""class-title"">jQuery Plugin(5)</div>', '<div class=""class-title"">jQuery Plugin(6)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX10 = [['<div class=""class-title"">UX(6)</div>', '<div class=""class-title"">期中專題(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期中專題(3)</div>', '<div class=""class-title"">期中專題(4)</div>', '<div class=""class-title"">期中專題(5)</div>'], ['<div class=""class-title"">期中專題(6)</div>', '<div class=""class-title"">期中專題(7)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期中專題(8)</div>', '<div class=""class-title"">期中專題(9)</div>', '<div class=""class-title"">期中專題(10)</div>'], ['<div class=""class-title"">期中專題(11)</div>', '<div class=""class-title"">期中專題(12)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX11 = [['<div class=""class-title"">Lab(8)</div>', '<div class=""class-title"">專題指導-劉(1)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">JS(1)</div>', '<div class=""class-title"">JS(2)</div>', '<div class=""class-title"">職場講座</div>'], ['<div class=""class-title"">JS(3)</div>', '<div class=""class-title"">JS(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">JS(5)</div>', '<div class=""class-title"">JS(6)</div>', '<div class=""class-title"">Lab(9)</div>'], ['<div class=""class-title"">JS advance(1)</div>', '<div class=""class-title"">UX(4)</div>', '<div class=""class-title"">N/A</div>']];
+        const weekUIUX8 = [['<div class="class-title">Adobe XD(3)</div>', '<div class="class-title">Adobe XD(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Adobe XD(5)</div>', '<div class="class-title">Adobe XD(6)</div>', '<div class="class-title">Lab(5)</div>'], ['<div class="class-title">網站規劃(3)</div>', '<div class="class-title">UX(5)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">jQuery UI(1)</div>', '<div class="class-title">jQuery UI(2)</div>', '<div class="class-title">Lab(6)</div>']];
+        const weekUIUX9 = [['<div class="class-title">jQuery UI(3)</div>', '<div class="class-title">jQuery UI(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">jQuery UI(5)</div>', '<div class="class-title">jQuery UI(6)</div>', '<div class="class-title">Lab(7)</div>'], ['<div class="class-title">jQuery Plugin(1)</div>', '<div class="class-title">jQuery Plugin(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">jQuery Plugin(3)</div>', '<div class="class-title">jQuery Plugin(4)</div>', '<div class="class-title">期中專題(1)</div>'], ['<div class="class-title">jQuery Plugin(5)</div>', '<div class="class-title">jQuery Plugin(6)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX10 = [['<div class="class-title">UX(6)</div>', '<div class="class-title">期中專題(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期中專題(3)</div>', '<div class="class-title">期中專題(4)</div>', '<div class="class-title">期中專題(5)</div>'], ['<div class="class-title">期中專題(6)</div>', '<div class="class-title">期中專題(7)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期中專題(8)</div>', '<div class="class-title">期中專題(9)</div>', '<div class="class-title">期中專題(10)</div>'], ['<div class="class-title">期中專題(11)</div>', '<div class="class-title">期中專題(12)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX11 = [['<div class="class-title">Lab(8)</div>', '<div class="class-title">專題指導-劉(1)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">JS(1)</div>', '<div class="class-title">JS(2)</div>', '<div class="class-title">職場講座</div>'], ['<div class="class-title">JS(3)</div>', '<div class="class-title">JS(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">JS(5)</div>', '<div class="class-title">JS(6)</div>', '<div class="class-title">Lab(9)</div>'], ['<div class="class-title">JS advance(1)</div>', '<div class="class-title">UX(4)</div>', '<div class="class-title">N/A</div>']];
 
-        const weekUIUX12 = [['<div class=""class-title"">JS advance(3)</div>', '<div class=""class-title"">JS advance(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">JS advance(5)</div>', '<div class=""class-title"">網站規劃(4)</div>', '<div class=""class-title"">Lab(11)</div>'], ['<div class=""class-title"">JS advance(6)</div>', '<div class=""class-title"">My SQL(1)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">My SQL(2)</div>', '<div class=""class-title"">My SQL(3)</div>', '<div class=""class-title"">Lab(12)</div>'], ['<div class=""class-title"">My SQL(4)</div>', '<div class=""class-title"">JS advance(2)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX13 = [['<div class=""class-title"">My SQL(5)</div>', '<div class=""class-title"">My SQL(6)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Php (1)</div>', '<div class=""class-title"">Php (2)</div>', '<div class=""class-title"">Lab(13)</div>'], ['<div class=""class-title"">Php (3)</div>', '<div class=""class-title"">網站規劃(5)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Php (4)</div>', '<div class=""class-title"">Php (5)</div>', '<div class=""class-title"">Lab(14)</div>'], ['<div class=""class-title"">Php (6)</div>', '<div class=""class-title"">Php (7)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX14 = [['<div class=""class-title"">Php (8)</div>', '<div class=""class-title"">Php (9)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">Php (10)</div>', '<div class=""class-title"">Php (11)</div>', '<div class=""class-title"">Lab(15)</div>'], ['<div class=""class-title"">Php (12)</div>', '<div class=""class-title"">模擬面試</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題作(1)</div>', '<div class=""class-title"">網站規劃(6)</div>', '<div class=""class-title"">Lab(16)</div>'], ['<div class=""class-title"">專題觀摩</div > ', ' < div class= ""class- title"" > 專題指導 - 林(1)</ > ', ' < div class= ""class- title"" > N / A</ > ']];
-        const weekUIUX15 = [['<div class=""class-title"">期末專題作(2)</div>', '<div class=""class-title"">專題指導-劉(2)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(3)</div>', '<div class=""class-title"">專題指導-劉(3)</div>', '<div class=""class-title"">Lab(17)</div>'], ['<div class=""class-title"">期末專題(4)</div>', '<div class=""class-title"">期末專題(5)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(6)</div>', '<div class=""class-title"">專題指導-劉(4)</div>', '<div class=""class-title"">Lab(18)</div>'], ['<div class=""class-title"">期末專題(7)</div>', '<div class=""class-title"">專題指導-林(2)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX16 = [['<div class=""class-title"">期末專題作(8)</div>', '<div class=""class-title"">專題指導-劉(5)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>']];
+        const weekUIUX12 = [['<div class="class-title">JS advance(3)</div>', '<div class="class-title">JS advance(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">JS advance(5)</div>', '<div class="class-title">網站規劃(4)</div>', '<div class="class-title">Lab(11)</div>'], ['<div class="class-title">JS advance(6)</div>', '<div class="class-title">My SQL(1)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">My SQL(2)</div>', '<div class="class-title">My SQL(3)</div>', '<div class="class-title">Lab(12)</div>'], ['<div class="class-title">My SQL(4)</div>', '<div class="class-title">JS advance(2)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX13 = [['<div class="class-title">My SQL(5)</div>', '<div class="class-title">My SQL(6)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Php (1)</div>', '<div class="class-title">Php (2)</div>', '<div class="class-title">Lab(13)</div>'], ['<div class="class-title">Php (3)</div>', '<div class="class-title">網站規劃(5)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Php (4)</div>', '<div class="class-title">Php (5)</div>', '<div class="class-title">Lab(14)</div>'], ['<div class="class-title">Php (6)</div>', '<div class="class-title">Php (7)</div>', '<div class="class-title">N/A</div>']];
+        // const weekUIUX14 = [['<div class="class-title">Php (8)</div>', '<div class="class-title">Php (9)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Php (10)</div>', '<div class="class-title">Php (11)</div>', '<div class="class-title">Lab(15)</div>'], ['<div class="class-title">Php (12)</div>', '<div class="class-title">模擬面試</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題作(1)</div>', '<div class="class-title">網站規劃(6)</div>', '<div class="class-title">Lab(16)</div>'], ['<div class="class-title">專題觀摩</div > ', ' < div class= ""class- title"" > 專題指導 - 林(1)</ > ', ' < div class= ""class- title"" > N / A</ > ']];
+        const weekUIUX14 = [['<div class="class-title">Php (8)</div>', '<div class="class-title">Php (9)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">Php (10)</div>', '<div class="class-title">Php (11)</div>', '<div class="class-title">Lab(15)</div>'], ['<div class="class-title">Php (12)</div>', '<div class="class-title">模擬面試</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題作(1)</div>', '<div class="class-title">網站規劃(6)</div>', '<div class="class-title">Lab(16)</div>'], ['<div class="class-title">專題觀摩</div>', '<div class="class-title">專題指導-林(1)</div>', '<div class="class-title">N/A</div>']];
 
-        const weekUIUX17 = [['<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(9)</div>', '<div class=""class-title"">專題指導-林(3)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(10)</div>', '<div class=""class-title"">專題指導-林(4)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(11)</div>', '<div class=""class-title"">專題指導-林(5)</div>', '<div class=""class-title"">Lab(19)</div>'], ['<div class=""class-title"">期末專題(12)</div>', '<div class=""class-title"">專題指導-劉(6)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX18 = [['<div class=""class-title"">期末專題(13)</div>', '<div class=""class-title"">專題指導-林(6)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(14)</div>', '<div class=""class-title"">專題指導-劉(7)</div>', '<div class=""class-title"">Lab(20)</div>'], ['<div class=""class-title"">期末專題(15)</div>', '<div class=""class-title"">專題指導-林(7)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">期末專題(16)</div>', '<div class=""class-title"">專題指導-劉(8)</div>', '<div class=""class-title"">Lab(21)</div>'], ['<div class=""class-title"">期末專題(17)</div>', '<div class=""class-title"">專題指導-林(8)</div>', '<div class=""class-title"">N/A</div>']];
-        const weekUIUX19 = [['<div class=""class-title"">期末專題(18)</div>', '<div class=""class-title"">專題指導-劉(9)</div>', '<div class=""class-title"">N/A</div>'], ['<div class=""class-title"">N/A</div>', '<div class=""class-title"">LAB-(22)預演</div > ', ' < div class= ""class- title"" > Lab(23)</ > '], [' < div class= ""class- title"" > N / A</ > ', ' < div class= ""class- title"" > 專題指導 - 林(9)</ > ', ' < div class= ""class- title"" > N / A</ > '], [' < div class= ""class- title"" > N / A</ > ', ' < div class= ""class- title"" > 專題預演</ > ', ' < div class= ""class- title"" > Lab(24)</ > '], [' < div class= ""class- title"" > 專題發表 / 結訓典禮</ > ', ' < div class= ""class- title"" > 就業媒合</ > ', ' < div class= ""class- title"" > N / A</ > ']];
+        const weekUIUX15 = [['<div class="class-title">期末專題作(2)</div>', '<div class="class-title">專題指導-劉(2)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題(3)</div>', '<div class="class-title">專題指導-劉(3)</div>', '<div class="class-title">Lab(17)</div>'], ['<div class="class-title">期末專題(4)</div>', '<div class="class-title">期末專題(5)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題(6)</div>', '<div class="class-title">專題指導-劉(4)</div>', '<div class="class-title">Lab(18)</div>'], ['<div class="class-title">期末專題(7)</div>', '<div class="class-title">專題指導-林(2)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX16 = [['<div class="class-title">期末專題作(8)</div>', '<div class="class-title">專題指導-劉(5)</div>', '<div class="class-title">N/A</div>']];
+
+        const weekUIUX17 = [['<div class="class-title">期末專題(9)</div>', '<div class="class-title">專題指導-林(3)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題(10)</div>', '<div class="class-title">專題指導-林(4)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題(11)</div>', '<div class="class-title">專題指導-林(5)</div>', '<div class="class-title">Lab(19)</div>'], ['<div class="class-title">期末專題(12)</div>', '<div class="class-title">專題指導-劉(6)</div>', '<div class="class-title">N/A</div>']];
+        const weekUIUX18 = [['<div class="class-title">期末專題(13)</div>', '<div class="class-title">專題指導-林(6)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題(14)</div>', '<div class="class-title">專題指導-劉(7)</div>', '<div class="class-title">Lab(20)</div>'], ['<div class="class-title">期末專題(15)</div>', '<div class="class-title">專題指導-林(7)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">期末專題(16)</div>', '<div class="class-title">專題指導-劉(8)</div>', '<div class="class-title">Lab(21)</div>'], ['<div class="class-title">期末專題(17)</div>', '<div class="class-title">專題指導-林(8)</div>', '<div class="class-title">N/A</div>']];
 
 
-        const allWeeksUIUX = [...weekUIUX1, ...weekUIUX2, ...weekUIUX3, ...weekUIUX4, ...weekUIUX5, ...weekUIUX6, ...weekUIUX7, ...weekUIUX8, ...weekUIUX9, ...weekUIUX10, ...weekUIUX11, ...weekUIUX12, ...weekUIUX13, ...weekUIUX14, ...weekUIUX15, ...weekUIUX16, ...weekUIUX17, ...weekUIUX18, ...weekUIUX19]
+        const weekUIUX19 = [['<div class="class-title">期末專題(18)</div>', '<div class="class-title">專題指導-劉(9)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">N/A</div>', '<div class="class-title">LAB-(22)預演</div>', '<div class="class-title">Lab(23)</div>'], ['<div class="class-title">N/A</div>', '<div class="class-title">專題指導-林(9)</div>', '<div class="class-title">N/A</div>'], ['<div class="class-title">N/A</div>', '<div class="class-title">專題預演(導師)</div>', '<div class="class-title">Lab(24)</div>'], ['<div class="class-title">專題發表/結訓典禮</div>', '<div class="class-title">就業媒合</div>', '<div class="class-title">N/A</div>']];
 
-        const getDay = document.querySelector("#getMFEEDay")
-        getDay.value = '2021-02-24';
+        const allWeeksUIUX = [...weekUIUX1, ...weekUIUX2, ...weekUIUX3, ...weekUIUX4, ...weekUIUX5, ...weekUIUX6, ...weekUIUX7, ...weekUIUX8, ...weekUIUX9, ...weekUIUX10, ...weekUIUX11, ...weekUIUX12, ...weekUIUX13, ...weekUIUX14, ...weekUIUX15, ...weekUIUX16, ...weekUIUX17, ...weekUIUX18, ...weekUIUX19];
+
+
+
+        const getMFEE13Day = document.querySelector("#getMFEE13Day")
+        getMFEE13Day.value = '2021-02-24';
 
         const getMMMH60Day = document.querySelector("#getMMMH60Day")
         getMMMH60Day.value = "2020-12-21";
 
-        getDay.addEventListener('change', () => {
+        const getMMMH61Day = document.querySelector("#getMMMH61Day")
+        getMMMH61Day.value = "2021-03-31";
+
+        const getMFEE15Day = document.querySelector("#getMFEE15Day")
+        getMFEE15Day.value = '2021-05-24';
+
+        const getMFEE17Day = document.querySelector("#getMFEE17Day")
+        getMFEE17Day.value = '2021-08-25';
+
+        getMFEE13Day.addEventListener('change', () => {
             render();
         })
 
@@ -183,48 +266,80 @@
             render();
         })
 
+        getMMMH61Day.addEventListener('change', () => {
+            render();
+        })
+
+        getMFEE15Day.addEventListener('change', () => {
+            render();
+        })
+
+        getMFEE17Day.addEventListener('change', () => {
+            render();
+        })
+
         let year = null;
         let month = null;
         let weekIndex = 0;
-        let dayIndex = 0;
+        let dayIndexMFEE13 = 0;
+        let dayIndexMFEE15 = 0;
+        let dayIndexMFEE17 = 0;
         let dayIndexMMMH60 = 0;
+        let dayIndexMMMH61 = 0;
         let newMonthDiv = null;
         let newWeekDiv = null;
+        let classTitleDisplayMFEE13 = false;
+        let classTitleDisplayMFEE15 = false;
+        let classTitleDisplayMFEE17 = false;
+        let classTitleDisplayMMMH60 = false;
+        let classTitleDisplayMMMH61 = false;
+
 
         const render = () => {
             root.innerHTML = '';
-            dayIndex = 0;
+            dayIndexMFEE13 = 0;
+            dayIndexMFEE15 = 0;
+            dayIndexMFEE17 = 0;
             dayIndexMMMH60 = 0;
+            dayIndexMMMH61 = 0;
+
             // console.log('render');
-            renderYearAndMonth(2020, 12, 2022, 12);
+            renderYearAndMonth(2020, 12, 2023, 12);
 
         }
 
         const renderYearAndMonth = (startYear, startMonth, endYear, endMonth) => {
             // console.log('startYear=', startYear);
             for (i = startYear; i <= endYear; i++) {
-                // console.log('renderYearAndMonth for i=', i);
-                // console.log((startYear === endYear) ? startMonth : (i === startYear) ? startMonth : 1);
-                // console.log((i === endYear) ? endMonth : 12);
+                console.log('renderYearAndMonth for i=', i);
+                console.log((startYear === endYear) ? startMonth : (i === startYear) ? startMonth : 1);
+                console.log((i === endYear) ? endMonth : 12);
                 renderMonths(i, (startYear === endYear) ? startMonth : (i === startYear) ? startMonth : 1, (i === endYear) ? endMonth : 12);
             }
         }
 
         const renderMonths = (yearNum, startM, endM) => {
-            // console.log('renderMonths yearNum=', yearNum, ' startM=', startM, ' endM=', endM);
+            console.log('renderMonths yearNum=', yearNum, ' startM=', startM, ' endM=', endM);
             for (let i = startM; i <= endM; i++) {
                 month = i;
                 year = yearNum;
                 weekIndex = 0;
-                // console.log('year:', year);
-                // console.log('month:', month);
+
+                classTitleDisplayMFEE13 = false;
+                classTitleDisplayMFEE15 = false;
+                classTitleDisplayMFEE17 = false;
+                classTitleDisplayMMMH60 = false;
+                classTitleDisplayMMMH61 = false;
 
                 newMonthDiv = document.createElement('div');
                 newMonthDiv.id = `${year}-${month}`;
                 newMonthDiv.classList.add(`months`, `month-${month}`);
 
                 let newMonthTitleArea = document.createElement('div');
-                newMonthTitleArea.innerHTML = `${year}年 ${month}月`;
+                newMonthTitleArea.id = (`classname-title-${year}-${month}`);
+                newMonthTitleArea.classList.add('classname-title-area')
+                newMonthTitleArea.innerHTML = `<span class="month-title">${year}年 ${month}月</span>`;
+                newMonthTitleArea.innerHTML += ` <span class="MFEE13 class-color-example display-none br-10 mr-10">MFEE13</span> <span class="MMMH60 class-color-example display-none br-10 mr-10">MMMH60</span><span class="MFEE15 class-color-example display-none br-10 mr-10">MFEE15</span><span class="MMMH61 class-color-example display-none br-10 mr-10">MMMH61</span><span class="MFEE17 class-color-example display-none br-10 mr-10">MFEE17</span>`
                 newMonthDiv.append(newMonthTitleArea);
 
                 let newWeekTitleArea = document.createElement('div');
@@ -262,15 +377,14 @@
                         newDayDiv.classList.add('holiday');
                     }
 
-                    // console.log(getDay.value);
+                    // console.log(getMFEE13Day.value);
                     // console.log(`${year}-${(month.toString().length === 2) ? month : '0' + month}-${(i.toString().length === 2) ? i : '0' + i}`);
-                    if (`${year}-${(month.toString().length === 2) ? month : '0' + month}-${(i.toString().length === 2) ? i : '0' + i}` === getDay.value) {
+                    if (`${year}-${(month.toString().length === 2) ? month : '0' + month}-${(i.toString().length === 2) ? i : '0' + i}` === getMFEE13Day.value) {
                         console.log('hi');
+
                     }
 
                     checkIsClassDay(`${year}-${(month.toString().length === 2) ? month : '0' + month}-${(i.toString().length === 2) ? i : '0' + i}`, newDayDiv);
-
-
 
                     newWeekDiv.append(newDayDiv);
 
@@ -278,20 +392,22 @@
                         weekIndex += 1;
                     }
                 }
+
+                removeDisplayNoneOfClassTitleExample(year, month);
             }
         }
 
         const checkIsClassDay = (date, newDayDiv) => {
-            if (((date === getDay.value) || (dayIndex > 0 && dayIndex <= allWeeks.length)) && allWeeks[dayIndex] && dayjs(date).day() !== 6 && dayjs(date).day() !== 0 && !checkIfHoliday(date)) {
+            if (((date === getMFEE13Day.value) || (dayIndexMFEE13 > 0 && dayIndexMFEE13 <= allWeeks.length)) && allWeeks[dayIndexMFEE13] && dayjs(date).day() !== 6 && dayjs(date).day() !== 0 && !checkIfHoliday(date)) {
                 let classDayDiv = document.createElement('div');
                 for (let k = 0; k < 3; k++) {
-                    // console.log('hi', k, ',', week1[i - 1][k]);
-                    // console.log('hi1', allWeeks[dayIndex][k].split('div class'));
-                    // console.log('hi2', allWeeks[dayIndex][k].split('div class').join(`div id="classday${dayIndex}${k}" class`));
-                    classDayDiv.innerHTML += allWeeks[dayIndex][k].split('div class="class-title"').join(`div id="dayMFEE11${dayIndex}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MFEE11"`);
+                    classDayDiv.innerHTML += allWeeks[dayIndexMFEE13][k].split('div class="class-title"').join(`div id="dayMFEE13${dayIndexMFEE13}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MFEE13"`);
                 }
+
+                classTitleDisplayMFEE13 = true;
+
                 newDayDiv.append(classDayDiv);
-                dayIndex++;
+                dayIndexMFEE13++;
             }
 
             if (((date === getMMMH60Day.value) || (dayIndexMMMH60 > 0 && dayIndexMMMH60 <= allWeeksUIUX.length)) && allWeeksUIUX[dayIndexMMMH60] && dayjs(date).day() !== 6 && dayjs(date).day() !== 0 && !checkIfHoliday(date)) {
@@ -299,13 +415,70 @@
 
                 for (let k = 0; k < 3; k++) {
                     // console.log('hi', k, ',', week1[i - 1][k]);
-                    // console.log('hi1', allWeeks[dayIndexMMMH60][k].split('div class'));
+                    // console.log('hi2', allWeeksUIUX[dayIndexMMMH60][k]);
                     // console.log('hi2', allWeeks[dayIndexMMMH60][k].split('div class').join(`div id="classday${dayIndexMMMH60}${k}" class`));
-                    classDayDiv.innerHTML += allWeeks[dayIndexMMMH60][k].split('div class="class-title"').join(`div id="dayMMMH60${dayIndexMMMH60}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MMMH60"`);
+                    classDayDiv.innerHTML += allWeeksUIUX[dayIndexMMMH60][k].split('div class="class-title"').join(`div id="dayMMMH60${dayIndexMMMH60}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MMMH60"`);
                 }
+
+                classTitleDisplayMMMH60 = true;
                 newDayDiv.append(classDayDiv);
                 dayIndexMMMH60++;
             }
+
+            if (((date === getMFEE15Day.value) || (dayIndexMFEE15 > 0 && dayIndexMFEE15 <= allWeeks.length)) && allWeeks[dayIndexMFEE15] && dayjs(date).day() !== 6 && dayjs(date).day() !== 0 && !checkIfHoliday(date)) {
+                let classDayDiv = document.createElement('div');
+                for (let k = 0; k < 3; k++) {
+                    // console.log('hi', k, ',', week1[i - 1][k]);
+                    // console.log('hi1', allWeeks[dayIndexMFEE15][k].split('div class'));
+                    // console.log('hi2', allWeeks[dayIndexMFEE15][k].split('div class').join(`div id="classday${dayIndexMFEE15}${k}" class`));
+                    classDayDiv.innerHTML += allWeeks[dayIndexMFEE15][k].split('div class="class-title"').join(`div id="dayMFEE15${dayIndexMFEE15}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MFEE15"`);
+                }
+                classTitleDisplayMFEE15 = true;
+                newDayDiv.append(classDayDiv);
+                dayIndexMFEE15++;
+            }
+
+            if (((date === getMMMH61Day.value) || (dayIndexMMMH61 > 0 && dayIndexMMMH61 <= allWeeksUIUX.length)) && allWeeksUIUX[dayIndexMMMH61] && dayjs(date).day() !== 6 && dayjs(date).day() !== 0 && !checkIfHoliday(date)) {
+                let classDayDiv = document.createElement('div');
+
+                for (let k = 0; k < 3; k++) {
+                    // console.log('hi', k, ',', week1[i - 1][k]);
+                    // console.log('hi1', allWeeksUIUX[dayIndexMMMH61][k].split('div class'));
+                    // console.log('hi2', allWeeksUIUX[dayIndexMMMH61][k].split('div class').join(`div id="classday${dayIndexMMMH61}${k}" class`));
+                    classDayDiv.innerHTML += allWeeksUIUX[dayIndexMMMH61][k].split('div class="class-title"').join(`div id="dayMMMH61${dayIndexMMMH61}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MMMH61"`);
+                }
+                classTitleDisplayMMMH61 = true;
+                newDayDiv.append(classDayDiv);
+                dayIndexMMMH61++;
+            }
+
+            if (((date === getMFEE17Day.value) || (dayIndexMFEE17 > 0 && dayIndexMFEE17 <= allWeeks.length)) && allWeeks[dayIndexMFEE17] && dayjs(date).day() !== 6 && dayjs(date).day() !== 0 && !checkIfHoliday(date)) {
+                let classDayDiv = document.createElement('div');
+                for (let k = 0; k < 3; k++) {
+                    // console.log('hi', k, ',', week1[i - 1][k]);
+                    console.log('hi1', allWeeks[dayIndexMFEE17][k]);
+                    // console.log('hi2', allWeeks[dayIndexMFEE17][k].split('div class').join(`div id="classday${dayIndexMFEE17}${k}" class`));
+                    classDayDiv.innerHTML += allWeeks[dayIndexMFEE17][k].split('div class="class-title"').join(`div id="dayMFEE17${dayIndexMFEE17}${k}" ondragstart="Drag(event)" ondrop="Drop(event)" class="class-title MFEE17"`);
+                }
+                classTitleDisplayMFEE17 = true;
+                newDayDiv.append(classDayDiv);
+                dayIndexMFEE17++;
+            }
+
+        }
+
+        const removeDisplayNoneOfClassTitleExample = (year, month) => {
+            let classDomList = [classTitleDisplayMFEE13, classTitleDisplayMFEE15, classTitleDisplayMFEE17, classTitleDisplayMMMH60, classTitleDisplayMMMH61];
+            let classNameList = ['MFEE13', 'MFEE15', 'MFEE17', 'MMMH60', 'MMMH61'];
+
+            classDomList.forEach((e, i) => {
+                if (e) {
+                    let title = document.querySelector(`#classname-title-${year}-${month} .${classNameList[i]}`);
+                    title.classList.remove('display-none');
+                }
+
+            })
+
 
         }
 
